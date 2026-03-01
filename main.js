@@ -75,6 +75,11 @@ app.get('/StatusUpdate',getstatus,async (req,res) => {
     res.json({currentstatus: result.rows[0]["text"]});
 })
 
+app.get('/CheckImportantStuff',getstatus,async (req,res) => {
+    const result = await pool.query('SELECT * FROM "importantinfo";')
+    res.json(result.rows[0]);
+})
+
 app.post('/requestcode',Normalrate, (req, res) => {
     DeleteOldLobbies();
     console.log('Received code request:', req.body);
