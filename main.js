@@ -14,7 +14,7 @@ const pool = new Pool({
 })
 var Normalrate = ratelimit.rateLimit({
     windowMs: 2 *60*1000,
-    limit: 1
+    limit: 10
 })
 var heartbeat = ratelimit.rateLimit({
     windowMs: 1 *60*1000,
@@ -83,6 +83,10 @@ app.post('/requestcode',Normalrate, (req, res) => {
     // Basic validation to ensure data was sent
     if (!ip || !port) {
         return res.status(400).json({ error: 'Please provide both ip and port.' });
+    }
+
+    if (port <= 0 || port > 65535) {
+        return res.sendStatus(400).send("Bad request");
     }
 
     const randomCode = generateCode();
