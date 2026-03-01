@@ -44,6 +44,10 @@ async function DeleteOldLobbies() {
     await pool.query(`DELETE FROM lobbies WHERE lastupdated < NOW() - INTERVAL '5 minutes'`);
 }
 
+app.get('/checklobbiesheartbeat', async (req,res) => {
+    DeleteOldLobbies();
+})
+
 app.post('/heartbeat',heartbeat, async (req, res) => {
     DeleteOldLobbies();
     const { code } = req.query;
