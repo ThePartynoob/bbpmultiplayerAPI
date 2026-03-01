@@ -1,12 +1,13 @@
 {
   "scripts": {
-    "start": "node main.js"
+    "start": "node -r newrelic main.js"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",
     "mongodb": "^7.1.0",
+    "newrelic": "^13.14.0",
     "pg": "^8.19.0"
   }
 }
