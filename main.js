@@ -46,6 +46,7 @@ async function DeleteOldLobbies() {
 
 app.get('/checklobbiesheartbeat', async (req,res) => {
     DeleteOldLobbies();
+    res.status(200);
 })
 
 app.post('/heartbeat',heartbeat, async (req, res) => {
