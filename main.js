@@ -88,11 +88,11 @@ app.get('/CheckImportantStuff',getstatus,async (req,res) => {
 app.post('/requestcode',Normalrate, (req, res) => {
     DeleteOldLobbies();
     console.log('Received code request:', req.body);
-    const { ip, port } = req.body;
+    const { ip, port, settings } = req.body;
 
     // Basic validation to ensure data was sent
-    if (!ip || !port) {
-        return res.status(400).json({ error: 'Please provide both ip and port.' });
+    if (!ip || !port || !settings) {
+        return res.status(400).json({ error: 'Please provide both ip, port and lobby settings.' });
     }
 
     if (port <= 0 || port > 65535) {
@@ -101,7 +101,7 @@ app.post('/requestcode',Normalrate, (req, res) => {
 
     const randomCode = generateCode();
 
-    console.log(`Code requested for ${ip}:${port}`);
+    console.log(`Code requested for ${ip}:${port} with settings ${settings}`);
 
     // Respond with the code
     res.json({
@@ -109,7 +109,7 @@ app.post('/requestcode',Normalrate, (req, res) => {
         code: randomCode
     });
 
-    pool.query('INSERT INTO lobbies (code,ip,port) VALUES ($1,$2,$3)', [randomCode,ip,port])
+    pool.query('INSERT INTO lobbies (code,ip,port,lobbysettings) VALUES ($1,$2,$3,$4)', [randomCode,ip,port,settings])
         .then(() => {
             console.log(`Lobby created with code ${randomCode} for ${ip}:${port}`);
     })
