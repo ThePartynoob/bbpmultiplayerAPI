@@ -106,7 +106,8 @@ app.post('/requestcode',Normalrate, (req, res) => {
     // Respond with the code
     res.json({
         success: true,
-        code: randomCode
+        code: randomCode,
+        settings: settings
     });
 
     pool.query('INSERT INTO lobbies (code,ip,port,lobbysettings) VALUES ($1,$2,$3,$4)', [randomCode,ip,port,settings])
