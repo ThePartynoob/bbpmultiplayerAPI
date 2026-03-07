@@ -31,6 +31,59 @@ var getstatus = ratelimit.rateLimit({
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+function getLevenshteinDistance(a, b) {
+    const matrix = Array.from({ length: a.length + 1 }, (_, i) => 
+        Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0))
+    );
+
+    for (let i = 1; i <= a.length; i++) {
+        for (let j = 1; j <= b.length; j++) {
+            const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+            matrix[i][j] = Math.min(
+                matrix[i - 1][j] + 1,      // Deletion
+                matrix[i][j - 1] + 1,      // Insertion
+                matrix[i - 1][j - 1] + cost // Substitution
+            );
+        }
+    }
+    return matrix[a.length][b.length];
+}
+
+function isBanned(input, bannedList) {
+    // 1. Normalize the string: Lowercase and swap common symbols
+    let cleanInput = input.toLowerCase()
+        .replace(/@/g, 'a')
+        .replace(/1/g, 'i')
+        .replace(/!/g, 'i')
+        .replace(/0/g, 'o')
+        .replace(/3/g, 'e')
+        .replace(/\$/g, 's');
+
+    for (const Word of bannedList) {
+        // 2. Check for exact match after normalization
+        if (cleanInput === Word["Word"]) return true;
+
+        // 3. Check Levenshtein Distance
+        // If the word is long, we allow 1 or 2 typos.
+        const distance = getLevenshteinDistance(cleanInput, Word["Word"]);
+        const threshold = Word["Word"].length > 5 ? 3 : 2; 
+        console.log(Word["Word"], distance)
+        if (distance <= threshold) return true;
+    }
+
+    return false;
+}
+
+async function checkUsernameBad(username) {
+    var badWordsList = await pool.query('SELECT "Word" FROM public."BadWords"');
+    var isusernamebanned = isBanned(username,badWordsList.rows)
+    console.log(isusernamebanned);
+    
+    return isusernamebanned;
+
+
+}
+
 // Helper to generate a random code
 const generateCode = (length = 8) => {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -42,6 +95,7 @@ const generateCode = (length = 8) => {
 };
 async function DeleteOldLobbies() {
     await pool.query(`DELETE FROM lobbies WHERE lastupdated < NOW() - INTERVAL '5 minutes'`);
+    return true
 }
 
 app.get('/checklobbiesheartbeat', async (req,res) => {
@@ -57,6 +111,19 @@ app.post('/heartbeat',heartbeat, async (req, res) => {
     res.json({ success: true });
     
 });
+
+app.get('/BadWordChecker', async (req,res) => {
+    const {username} = req.query;
+    var currentusername = username
+    var isitBad = await checkUsernameBad(username);
+
+    if (isitBad) {
+        currentusername = `[REDACTED-${Math.round(Math.random()*1000)}]`
+    }
+
+
+    res.json({ filteredUsername: currentusername});
+})
 
 app.get('/lobby',getLobbyInfo, async (req, res) => {
     DeleteOldLobbies();

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node -r newrelic main.js"
+    "start": "node main.js"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
