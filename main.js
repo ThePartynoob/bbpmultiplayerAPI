@@ -134,6 +134,15 @@ app.get('/lobby',getLobbyInfo, async (req, res) => {
     
 });
 
+app.get('/lobbysettings',getLobbyInfo, async (req, res) => {
+    DeleteOldLobbies();
+    const { code } = req.query;
+    console.log(`Received lobby info settings request for code: ${code}`);
+    const result = await pool.query('SELECT lobbysettings FROM lobbies WHERE code = $1', [code]);
+    res.json(result.rows[0]);
+    
+});
+
 app.all('/IsApiUp', (req, res) => {
     res.json({ success: true });
 });
