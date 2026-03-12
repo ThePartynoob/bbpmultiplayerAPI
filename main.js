@@ -149,6 +149,11 @@ app.all('/IsApiUp', (req, res) => {
 
 app.all('/privacy-policy', (req, res) => {
     res.sendFile( __dirname + "/privacy-policy.html");
+    
+});
+
+app.get('/GetAssets', Normalrate, (req,res) =>{
+    res.download(__dirname + "/sprites.zip", "sprites.zip")
 });
 
 app.get('/StatusUpdate',getstatus,async (req,res) => {
