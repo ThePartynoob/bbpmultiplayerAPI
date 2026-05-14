@@ -143,7 +143,8 @@ app.get('/lobbysettings',getLobbyInfo, async (req, res) => {
     
 });
 
-app.all('/IsApiUp', (req, res) => {
+app.all('/IsApiUp', async (req, res) => {
+    await DeleteOldLobbies()
     res.json({ success: true });
 });
 
