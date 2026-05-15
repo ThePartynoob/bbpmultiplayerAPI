@@ -135,6 +135,15 @@ app.get('/lobby',getLobbyInfo, async (req, res) => {
     
 });
 
+app.get('/server',getLobbyInfo, async (req, res) => {
+    
+    const { code } = req.query;
+    console.log(`Received lobby info request for code: ${code}`);
+    const result = await pool.query('SELECT "ServerID", "Settings" FROM "Servers" WHERE code = $1', [code]);
+    res.json(result.rows[0]);
+    
+});
+
 app.get('/lobbysettings',getLobbyInfo, async (req, res) => {
     DeleteOldLobbies();
     const { code } = req.query;

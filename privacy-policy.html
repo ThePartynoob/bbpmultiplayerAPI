@@ -3,31 +3,44 @@
 
     </head>
     <body>
-        
-        <h1><center>Privacy Policy</center></h1>
-        <p>Privacy Policy for Baldi's basics Multiplayer
-Last Updated: February 26, 2026
+    <header>
+        <h1 style="text-align: center;">Privacy Policy</h1>
+        <p style="text-align: center;"><strong>Project:</strong> Baldi's Basics Plus Multiplayer (BBPM)<br>
+        <strong>Last Updated:</strong> May 15, 2026</p>
+    </header>
 
-1. Information Collection & "Join Code" System
-To facilitate multiplayer connectivity without exposing your private information to the public, this mod uses a Join Code system:
-<br><br>
-IP Address Collection: When you host a game, your public IP address is sent to our private database.
-<br><br>
-Code Generation: The database generates a unique, temporary Join Code linked to your IP.
-<br><br>
-Public Visibility: Only the Join Code is visible to other players or in any public lobby lists. Your actual IP address is never displayed publicly.
-<br><br>
-2. How Your Data is Processed
-The IP address acts as the "destination" for the game data. When a player enters your Join Code, our server looks up the associated IP address in the database and tells the player's game client where to send the connection request.
-<br><br>
-3. Data Retention & Deletion
-Temporary Storage: IP addresses and their associated Join Codes are stored in volatile memory/database entries only for the duration of the active session.
-<br><br>
-Automatic Removal: Once the host closes the game, or if the connection to our database is lost for more than a few minutes, the IP address and the Join Code are permanently deleted from our records.
-<br><br>
-4. Security & Peer-to-Peer Disclosure
-While your IP is hidden behind a Join Code in the menu, please note that because this mod uses Peer-to-Peer (P2P) technology, a technical user who joins your game may still be able to see your IP address through network monitoring tools (as their computer must talk directly to yours to play the game). We recommend only sharing your Join Code with players you trust.
-    </body>
+    <hr>
+
+    <section>
+        <h2>1. Server Infrastructure (Edgegap)</h2>
+        <p>To provide the lowest possible latency, this mod utilizes <strong>Edgegap</strong> for automated server orchestration. When you join a match, a dedicated game instance is deployed at the "edge" of the network—physically closest to the participating players.</p>
+    </section>
+
+    <section>
+        <h2>2. Information Collection & Privacy</h2>
+        <p>Your privacy is protected by our server-side architecture:</p>
+        <ul>
+            <li><strong>IP Address Shielding:</strong> Unlike Peer-to-Peer (P2P) systems, your IP address is only visible to the Edgegap server instance. It is <strong>never</strong> shared with, or visible to, other players in the session.</li>
+            <li><strong>Geolocation Data:</strong> Your IP address is used by Edgegap solely to determine the nearest data center location to ensure a high-performance gaming experience.</li>
+            <li><strong>No Tracking:</strong> We do not use your IP address for marketing, profiling, or long-term tracking.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Third-Party Processing</h2>
+        <p>By using the multiplayer features, you acknowledge that your connection data is processed by Edgegap to facilitate the game session. Edgegap operates as a neutral infrastructure provider and does not store your personal data beyond the technical requirements of the active game session.</p>
+    </section>
+
+    <section>
+        <h2>4. Data Retention</h2>
+        <p>All session-related data, including IP logs used for the connection handshake, are temporary. This information is automatically purged from the edge instance once the game server is shut down or the session concludes.</p>
+    </section>
+
+    <footer>
+        <hr>
+        <p style="font-size: 0.9em; color: #555;"><em>Disclaimer: This mod is a community project and is not affiliated with or endorsed by Basically Games.</em></p>
+    </footer>
+</body>
 </html>
 
 <style>
