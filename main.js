@@ -1,5 +1,6 @@
 const express = require('express');
 const ratelimit = require('express-rate-limit');
+const { ConnectionPoolClosedEvent } = require('mongodb');
 require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -167,23 +168,41 @@ app.get('/CheckImportantStuff',getstatus,async (req,res) => {
     res.json(result.rows[0]);
 })
 
-app.post('/requestcode',Normalrate, (req, res) => {
+app.post('/requestcode',Normalrate, async (req, res) => {
     DeleteOldLobbies();
     console.log('Received code request:', req.body);
-    const { ip, port, settings } = req.body;
+    const { settings } = req.body;
 
     // Basic validation to ensure data was sent
-    if (!ip || !port || !settings) {
-        return res.status(400).json({ error: 'Please provide both ip, port and lobby settings.' });
+    if (!settings) {
+        return res.status(400).json({ error: 'Please provide lobby settings.' });
     }
 
-    if (port <= 0 || port > 65535) {
-        return res.sendStatus(400).send("Bad request");
-    }
+    const server = await fetch('https://api.edgegap.com/v2/deployments', {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json',
+            'Authorization' : 'token ' + process.env.API_KEY
+        },
+        body: JSON.stringify({
+            application: "BBPM",
+            version: "v1",
+            users: [
+                {
+                    user_type : "ip_address",
+                    user_data : {
+                        ip_address: req.ip
+                    }
+                }
+            ]
 
+        })
+    })
+
+    const { request_id } = await server.json()
     const randomCode = generateCode();
 
-    console.log(`Code requested for ${ip}:${port} with settings ${settings}`);
+    console.log(`Code requested for settings ${settings}`);
 
     // Respond with the code
     res.json({
@@ -192,9 +211,11 @@ app.post('/requestcode',Normalrate, (req, res) => {
         settings: settings
     });
 
-    pool.query('INSERT INTO lobbies (code,ip,port,lobbysettings) VALUES ($1,$2,$3,$4)', [randomCode,ip,port,settings])
+
+
+    pool.query('INSERT INTO "Servers" (code,"ServerID","Settings") VALUES ($1,$2,$3)', [randomCode,request_id,settings])
         .then(() => {
-            console.log(`Lobby created with code ${randomCode} for ${ip}:${port}`);
+            console.log(`Lobby created with code ${randomCode}, ServerID : ${request_id}`);
     })
    
 
