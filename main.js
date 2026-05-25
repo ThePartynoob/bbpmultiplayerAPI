@@ -158,7 +158,7 @@ app.all('/IsApiUp', async (req, res) => {
     res.json({ success: true });
 });
 
-app.all('/privacy-policy', (req, res) => {
+app.all('/tos', (req, res) => {
     res.sendFile( __dirname + "/privacy-policy.html");
     
 });
@@ -186,6 +186,13 @@ app.post('/requestcode',Normalrate, async (req, res) => {
     if (!settings) {
         return res.status(400).json({ error: 'Please provide lobby settings.' });
     }
+    let playerIp = req.ip;
+
+// If you're testing locally (IPv6 loopback '::1' or IPv4 loopback '127.0.0.1')
+if (playerIp === '::1' || playerIp === '127.0.0.1' || playerIp === '::ffff:127.0.0.1') {
+    // Fallback to a real public IP for testing (e.g., a random Google DNS IP in the US, or your own public IP)
+    playerIp = '8.8.8.8'; 
+}
 
     const server = await fetch('https://api.edgegap.com/v2/deployments', {
         method: 'POST',
@@ -195,13 +202,21 @@ app.post('/requestcode',Normalrate, async (req, res) => {
         },
         body: JSON.stringify({
             application: "BBPM",
-            version: "v1",
+            version: "v2",
+            require_cached_locations:false,
             users: [
                 {
                     user_type : "ip_address",
                     user_data : {
-                        ip_address: req.ip
+                        ip_address: playerIp
                     }
+                }
+            ],
+            environment_variables: [
+                {
+                    key: "MAX_PLAYERS",
+                    value: `${settings["maxplayers"]}`,
+                    is_hidden:false
                 }
             ]
 
