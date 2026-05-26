@@ -1,5 +1,6 @@
 const express = require('express');
 const ratelimit = require('express-rate-limit');
+const axios = require('axios')
 const { ConnectionPoolClosedEvent } = require('mongodb');
 require('dotenv').config();
 const app = express();
@@ -194,36 +195,13 @@ if (playerIp === '::1' || playerIp === '127.0.0.1' || playerIp === '::ffff:127.0
     playerIp = '8.8.8.8'; 
 }
 
-    const server = await fetch('https://api.edgegap.com/v2/deployments', {
-        method: 'POST',
-        headers: {
-            'Content-Type' : 'application/json',
-            'Authorization' : 'token ' + process.env.API_KEY
-        },
-        body: JSON.stringify({
-            application: "BBPM",
-            version: "v2",
-            require_cached_locations:false,
-            users: [
-                {
-                    user_type : "ip_address",
-                    user_data : {
-                        ip_address: playerIp
-                    }
-                }
-            ],
-            environment_variables: [
-                {
-                    key: "MAX_PLAYERS",
-                    value: `${settings["maxplayers"]}`,
-                    is_hidden:false
-                }
-            ]
+    const server = await axios.get("http://34.170.143.249:8080/createlobby")
+    const resp = server.data
+    if (server.status != 200) {
+        return res.status(500).json({error: 'Couldnt start lobby'})
+    }
+    console.log(resp)
 
-        })
-    })
-
-    const { request_id } = await server.json()
     const randomCode = generateCode();
 
     console.log(`Code requested for settings ${settings}`);
@@ -237,9 +215,9 @@ if (playerIp === '::1' || playerIp === '127.0.0.1' || playerIp === '::ffff:127.0
 
 
 
-    pool.query('INSERT INTO "Servers" (code,"ServerID","Settings") VALUES ($1,$2,$3)', [randomCode,request_id,settings])
+    pool.query('INSERT INTO "Servers" (code,"ServerID","Settings") VALUES ($1,$2,$3)', [randomCode,resp,settings])
         .then(() => {
-            console.log(`Lobby created with code ${randomCode}, ServerID : ${request_id}`);
+            console.log(`Lobby created with code ${randomCode}, ServerID : ${resp}`);
     })
    
 

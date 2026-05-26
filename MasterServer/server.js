@@ -4,7 +4,7 @@ const { exec, execSync } = require('child_process');
 const START_PORT = 8081;                  // Start checking from port 8081
 const MAX_PORT = 8100;       
 const PORT = 8080;
-const SERVER_IP = "35.225.5.178"
+const SERVER_IP = "34.170.143.249"
 const lockedPorts = new Set();
 const app = express()
 // Helper function to check if Docker desktop has a container with this port name active
