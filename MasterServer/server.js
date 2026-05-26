@@ -7,6 +7,7 @@ const PORT = 8080;
 const SERVER_IP = "34.170.143.249"
 const lockedPorts = new Set();
 const app = express()
+app.use(express.json());
 // Helper function to check if Docker desktop has a container with this port name active
 function isDockerPortTaken(port) {
     try {
@@ -53,8 +54,10 @@ async function getNextAvailablePort() {
     return null; // All ports full
 }
 
-app.get("/createlobby", async (req,res) => {
+app.post("/createlobby", async (req,res) => {
     const asignnedPort = await getNextAvailablePort()
+    const {setings} = req.body
+    console.log(setings)
     if (!asignnedPort) {
         console.log("[warn] no more slots left")
         res.status(503).send("SERVERS_FULL")
@@ -73,6 +76,9 @@ app.get("/createlobby", async (req,res) => {
         res.status(200).send(`${SERVER_IP}:${asignnedPort}`);
     });
     }
+})
+app.get("/isup", async (req,res) => {
+    res.status(200).send("working")
 })
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Express Master Server running on port ${PORT}...`);

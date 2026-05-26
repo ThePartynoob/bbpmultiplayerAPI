@@ -195,7 +195,11 @@ if (playerIp === '::1' || playerIp === '127.0.0.1' || playerIp === '::ffff:127.0
     playerIp = '8.8.8.8'; 
 }
 
-    const server = await axios.get("http://34.170.143.249:8080/createlobby")
+    const server = await axios.post("http://127.0.0.1:8080/createlobby", {
+        body: {
+            setings: settings
+        }
+    })
     const resp = server.data
     if (server.status != 200) {
         return res.status(500).json({error: 'Couldnt start lobby'})
