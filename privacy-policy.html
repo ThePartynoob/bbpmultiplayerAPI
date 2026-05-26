@@ -1,74 +1,109 @@
-<html>
-    <head>
-
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BBPM Terms of Service & Privacy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+        
+        html {
+            font-family: "Mulish", Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
+        body {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        p, li {
+            font-size: 18px;
+            text-align: left;
+        }
+        header h1 {
+            margin-bottom: 5px;
+        }
+        header p {
+            text-align: center;
+            margin-top: 0;
+        }
+        h2 {
+            color: #222;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        b, strong {
+            font-weight: 800;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        b:hover, strong:hover {
+            color: orange;
+            transform: scale(1.05);
+        }
+        a {
+            color: #ff5e5b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
     <header style="text-align: center;">
         <h1>Terms of Service & Privacy</h1>
         <p><strong>Baldi's Basics Plus Multiplayer (BBPM)</strong><br>
-        <em>Community-Hosted via Edgegap (Free Tier)</em></p>
+        <em>Community-Hosted via Google Cloud Platform (GCP)</em></p>
     </header>
 
     <hr>
 
     <section>
-        <h2>1. Free "Best-Effort" Service</h2>
-        <p>This multiplayer mod utilizes <strong>Edgegap’s Free Tier</strong> infrastructure. Because this is a free, community-driven service, please be aware of the following:</p>
+        <h2>1. Infrastructure & Optional Donations</h2>
+        <p>This multiplayer mod utilizes a dedicated <strong>Google Cloud Compute Engine</strong> VM (E2-micro instance) to keep servers online. Please note the following funding terms:</p>
         <ul>
-            <li><strong>Session Limits:</strong> Game servers may automatically shut down or reset after a certain period of time (e.g., 3 hours) or after a period of inactivity to conserve resources.</li>
-            <li><strong>No Guaranteed Uptime:</strong> We do not guarantee 24/7 server availability. Since we rely on free third-party resources, the service may be interrupted or limited based on provider capacity.</li>
-            <li><strong>No Cost to You:</strong> You will never be charged for using these multiplayer features.</li>
+            <li><strong>Current Funding:</strong> The multiplayer infrastructure is currently operating on free introductory cloud credits. The mod is entirely free to play.</li>
+            <li><strong>Future Sustainability & Donations:</strong> Once these credits run out, the hosting will transition to a paid model. To help extend the lifetime of the mod and ensure the servers stay online long-term, players have the option to <strong>donate toward infrastructure costs</strong> via <a href="https://ko-fi.com/partynoob" target="_blank">Ko-fi</a>. All contributions go directly toward keeping the virtual machine active.</li>
+            <li><strong>Uptime Expectations:</strong> This is a "best-effort" community service. While the dedicated VM allows for persistent hosting, we do not guarantee 24/7 uninterrupted uptime.</li>
         </ul>
     </section>
 
     <section>
         <h2>2. Privacy & Network Security</h2>
-        <p>Your safety is built into our server design. By using Edgegap instead of Peer-to-Peer (P2P) hosting:</p>
+        <p>We care about your network privacy. By routing gameplay data through a centralized cloud server instead of a Peer-to-Peer (P2P) network, your home network stays secure:</p>
         <ul>
-            <li><strong>Hidden IP Addresses:</strong> Other players <u>cannot</u> see your IP address. Your connection is routed through an Edgegap server, keeping your home network private.</li>
-            <li><strong>Location Data:</strong> Your IP address is only used by the system to find the closest available Edgegap node to reduce your lag.</li>
-            <li><strong>Data Deletion:</strong> All connection logs are temporary and are cleared once the server instance closes. We do not store or sell your data.</li>
+            <li><strong>Hidden From Other Players:</strong> Your personal IP address is 100% hidden from all other players in the game. All traffic is safely masked by the Google Cloud server.</li>
+            <li><strong>Host Data & Moderation:</strong> Currently, the developer does not view or store player IP addresses. However, because network identification may be required in the future to implement server-side moderation features (such as <strong>banning toxic or malicious players</strong>), connection data may be processed by the server system strictly for network security and administration purposes.</li>
+            <li><strong>Data Protection:</strong> We do not collect, track, or sell your personal details. Any metadata generated during your session is temporary.</li>
         </ul>
     </section>
 
     <section>
         <h2>3. Usage Rules</h2>
-        <p>By playing, you agree not to abuse the free resources provided by Edgegap. This includes:</p>
+        <p>To keep the server environment stable and affordable for everyone, users must agree to the following conditions:</p>
         <ul>
-            <li>Intentionally trying to crash the server or "spam" deployment requests.</li>
-            <li>Using cheats that disrupt the server-side logic for other players.</li>
-            <li>Any activity that violates Edgegap's own Acceptable Use Policies.</li>
+            <li>No intentional automated attacks, packet flooding, or attempts to crash the virtual machine instance.</li>
+            <li>No execution of malicious cheats that corrupt server-side synchronization files or block others from joining.</li>
+            <li>Any activity that violates Google Cloud’s standard Acceptable Use Policy is strictly prohibited. Violations may result in a permanent ban.</li>
         </ul>
     </section>
 
     <section>
         <h2>4. Disclaimer</h2>
-        <p>The developers of this mod are not responsible for any technical issues resulting from the use of this free service. We provide this mod for fun and community engagement, "as-is," with no warranties expressed or implied.</p>
+        <p>The developers provide this mod strictly for community entertainment purposes. This project is provided "as-is" without explicit or implied warranties. We are not responsible for performance fluctuations, connection drops, or cloud service interruptions.</p>
     </section>
 
-    <footer style="margin-top: 30px; border-top: 1px solid #ddd; padding-top: 10px; font-size: 0.8em; text-align: center; color: #666;">
-        <p><em>Baldi's Basics Multiplayer is a fan project and is not affiliated with Basically Games or Edgegap Technologies.</em></p>
+    <footer style="margin-top: 40px; border-top: 1px solid #ddd; padding-top: 15px; font-size: 0.85em; text-align: center; color: #666;">
+        <p style="text-align: center; font-size: 14px;"><em>Baldi's Basics Multiplayer is a fan project and is not affiliated with Basically Games or Google Cloud Platform.</em></p>
     </footer>
 </body>
 </html>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
-    html {
-        font-family: "Mulish",Arial;
-    }
-    p {
-        font-size: 30px;
-        justify-content: center;
-        
-    }
-
-    b {
-        text-decoration: underline;
-        transition-duration: 0.5s;
-    }
-    b:hover {
-        color:orange;
-        font-size: 33px;
-    }
-</style>
