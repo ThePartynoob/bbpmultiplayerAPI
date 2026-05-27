@@ -4,7 +4,7 @@ const axios = require('axios')
 const { ConnectionPoolClosedEvent } = require('mongodb');
 require('dotenv').config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 443;
 const { Pool } = require('pg');
 
 const pool = new Pool({
