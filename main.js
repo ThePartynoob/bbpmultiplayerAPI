@@ -174,6 +174,9 @@ app.get('/StatusUpdate',getstatus,async (req,res) => {
     const result = await pool.query('SELECT * FROM "StatusUpdate" ORDER BY id DESC FETCH FIRST 1 ROW ONLY;')
     res.json({currentstatus: result.rows[0]["text"]});
 })
+app.all('/',getstatus,async (req,res) => {
+    res.sendFile( __dirname + "/welcome.html");
+})
 
 app.get('/CheckImportantStuff',getstatus,async (req,res) => {
     const result = await pool.query('SELECT * FROM "importantinfo";')
