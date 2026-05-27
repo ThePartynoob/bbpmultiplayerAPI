@@ -167,7 +167,9 @@ app.all('/tos', (req, res) => {
 app.get('/GetAssets', Normalrate, (req,res) =>{
     res.download(__dirname + "/sprites.zip", "sprites.zip")
 });
-
+app.all(".well-known/pki-validation/64EC44D13F7724D54017E65457B25B0D.txt", async (req,res) => {
+    res.sendFile(__dirname + "/64EC44D13F7724D54017E65457B25B0D.txt")
+})
 app.get('/StatusUpdate',getstatus,async (req,res) => {
     const result = await pool.query('SELECT * FROM "StatusUpdate" ORDER BY id DESC FETCH FIRST 1 ROW ONLY;')
     res.json({currentstatus: result.rows[0]["text"]});
